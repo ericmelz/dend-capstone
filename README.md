@@ -25,7 +25,7 @@ The analytics data is derived from two data sources:
 ```
 
 
-###Top penal codes in Los Angeles (all zipcodes)
+### Top penal codes in Los Angeles (all zipcodes)
 ```
    charge   | counts
 ------------+--------
@@ -37,7 +37,7 @@ The analytics data is derived from two data sources:
 ```
 
 
-###Top penal codes in Sherman Oaks (zipcode = 91403)
+### Top penal codes in Sherman Oaks (zipcode = 91403)
 ```
    charge   | counts
 ------------+--------
@@ -49,7 +49,7 @@ The analytics data is derived from two data sources:
 ```
 
 
-###Most popular hour of day to commit crime
+### Most popular hour of day to commit crime
 ```
  hourofday | crimes
 -----------+--------
