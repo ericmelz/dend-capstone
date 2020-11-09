@@ -15,6 +15,12 @@ The analytics data is derived from two data sources:
 ## Example queries
 ### Top zipcodes for crime
 ```
+SELECT zipcode, count(*) crimes
+FROM crime_fact
+GROUP BY zipcode
+ORDER BY crimes DESC
+LIMIT 5;
+
  zipcode | crimes
 ---------+--------
  90028   |  77526
@@ -27,6 +33,12 @@ The analytics data is derived from two data sources:
 
 ### Top penal codes in Los Angeles (all zipcodes)
 ```
+SELECT charge, count(*) counts
+FROM crime_fact
+GROUP BY charge
+ORDER BY counts DESC
+LIMIT 5;
+
    charge   | counts
 ------------+--------
  23152(A)VC |  98726
@@ -39,6 +51,13 @@ The analytics data is derived from two data sources:
 
 ### Top penal codes in Sherman Oaks (zipcode = 91403)
 ```
+SELECT charge, count(*) counts
+FROM crime_fact
+WHERE zipcode = '91403'
+GROUP BY charge
+ORDER BY counts DESC
+LIMIT 5;
+
    charge   | counts
 ------------+--------
  23152(A)VC |   2144
@@ -51,6 +70,14 @@ The analytics data is derived from two data sources:
 
 ### Most popular hour of day to commit crime
 ```
+SELECT HourOfDay, count(*) crimes
+FROM crime_fact
+LEFT JOIN datetime_dimension
+ON crime_fact.ReportId = datetime_dimension.ReportId
+GROUP BY HourOfDay
+ORDER BY crimes DESC
+LIMIT 5;
+
  hourofday | crimes
 -----------+--------
         16 |  80313
