@@ -2,7 +2,8 @@
 
 set -ex
 
-base_dir=/home/ubuntu
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+project_dir="$( dirname $script_dir )"
 data_dir=${data_dir:-$base_dir/data}
 shapes_dir=$base_dir/shapes
 arrests_csv_filename=${arrests_csv_filename:-arrests.csv}

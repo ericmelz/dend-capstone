@@ -4,7 +4,11 @@ set -ex
 
 echo "Downloading los angeles county zipcode data..."
 
-. variables.sh
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+. $script_dir/variables.sh
+echo "script_dir is $script_dir"
+echo "project__dir is $project_dir"
 
 rm -f $shapes_dir/*.zip
 rm -f $shapes_dir/*.shp
