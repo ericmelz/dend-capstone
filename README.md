@@ -221,7 +221,7 @@ shapes (a `.zip` file containing shape files).
    csv structure.  All colummns in `crime_staging_untyped`
    are varchars.
 
-* *Clearn the raw data* - Change rows containing `time=2400` to
+* *Clean the raw data* - Change rows containing `time=2400` to
    `time=0000`, and remove rows containing `NULL`s
 
 * *Compute new records* - Calculate the records that are not already
@@ -266,25 +266,25 @@ data is updated weekly.
 If the data were to increase by 100x, it would no longer be feasible
 to use the identical pipeline and database.  This is because the
 pipeline takes about 15 minutes to run currently, and a 100x increase
-in size necessitates more approximately 100x time to process, in this
+in size necessitates approximately 100x time to process, in this
 case over one day.  To mitigate the increased demand, the data can be
 partitioned into time-based chunks such as daily or hourly.  This
 would allow a spark-based pipeline to process each partition in
-parallel.  Also a datawarehouse such as redshift can leverage
+parallel.  Also a datawarehouse such as Redshift can leverage
 distributed nodes to speed up processing.
 
 The pipeline could be further productionalized by leveraging airflow,
 enabling monitoring and backfilling functionality.
 
 ### Daily schedule
-If the pipeline were to run at 7a.m., a cron job could be scheduled to
-run the `run_pipeline.sh` script daily at 7a.m.  Otherwise, there is
-little to change about the pipeline.  This is because the pipeline is
-design to detect new records, and will process only the new records
-when they become available.  If there are no new records in the source
-data, there will be nothing added to the fact or dimension tables.
-Currently, the pipeline takes about 15 minutes to run, so there would
-be a minor cost incurred for running it daily.
+If the pipeline were to run at 7a.m., Airflow or a cron job could be
+scheduled to run the `run_pipeline.sh` script daily at 7a.m.
+Otherwise, there is little to change about the pipeline.  This is
+because the pipeline is design to detect new records, and will process
+only the new records when they become available.  If there are no new
+records in the source data, there will be nothing added to the fact or
+dimension tables.  Currently, the pipeline takes about 15 minutes to
+run, so there would be a minor cost incurred for running it daily.
 
 ### Data access
 If the data needed to be accessed by 100+ people, the current
