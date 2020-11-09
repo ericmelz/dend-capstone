@@ -115,8 +115,6 @@ LIMIT 5;
  11350(A)HS |    135 | posession of a controlled substance without a prescription
 ```
 
-<img style="float: right;" src="images/90028.png">
-
 <img style="float: right;" src="images/91403.png">
 
 ### Most popular hours of the day to commit crimes
