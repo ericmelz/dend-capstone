@@ -32,6 +32,12 @@ LIMIT 5;
 
 
 ### Top penal codes in Los Angeles (all zipcodes)
+Note the following Penal code descriptions:
+| Code | Description |
+| --- | --- |
+| 23152 | DUI |
+
+
 ```
 SELECT charge, count(*) counts
 FROM crime_fact
