@@ -92,7 +92,7 @@ LIMIT 5;
  25620(A)BP |   3442 | posession of an open alcohol container in public
 ```
 
-<img style="float: right;" src="90028.jpg">
+<img style="float: right;" src="images/90028.png">
 
 
 ### Top penal codes in Sherman Oaks (zipcode = 91403), a typical suburb
