@@ -9,16 +9,29 @@ The analytics data is derived from two data sources:
 
 
 ## Data dictionary
-### crime_fact
+### crime_fact - Fact table of arrest reports
 | Column name | Type | Constraint | Description |
 | --- | --- | --- | --- |
 | ReportId | varchar | Primary Key | Id of the arrest report |
 | Age | varchar | | Age of the offender |
-| SexCode | varchar | | Gender of the offender M = Male, F = Female |
-| Descent Code | varchar | | Ethnicity of the offender W = White, H = Hispanic, B = Black |
+| SexCode | varchar | | Gender of the offender M=Male, F=Female |
+| Descent Code | varchar | | Ethnicity of the offender W=White, H=Hispanic, B=Black |
 | Charge | varchar | | Penal code associated with the arrest |
 | ZipCode | varchar | | Zip code of the arrest |
 
+###datetime_dimension - Dimension table for date and time
+| Column name | Type | Constraint | Description |
+| --- | --- | --- | --- |
+| ReportId | varchar | Primary Key | Id of the arrest report |
+| Timestamp | timestamp |  | timestamp of the arrest |
+| Year | integer |  | Year of the arrest |
+| Month | integer |  | Year of the arrest |
+| DayOfMonth | integer |  | Day of month  of the arrest |
+| DayOfWeek | integer |  | Day of week of the arrest |
+| WeekOfYear | integer |  | Week of year of the arrest |
+| HourOfDay | integer |  | Hour of day of the arrest |
+
+## 
 
 ## Example queries
 ### Top zipcodes for crime
