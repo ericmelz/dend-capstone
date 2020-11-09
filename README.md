@@ -2,10 +2,10 @@
 Udacity Data Engineering Nano Degree capstone project
 
 ## Goal
-The goal of this project is to provide a star schema for analyzing los angeles crime reports.
+The goal of this project is to provide a star schema for analyzing Los Angeles crime reports.
 The analytics data is derived from two data sources:
 * [Los Angeles crime reports](https://data.lacity.org/A-Safe-City/Arrest-Data-from-2010-to-2019/yru6-6re4) - 1.3M rows
-* [Los Angeles Postal Codes](https://leginfo.legislature.ca.gov/faces/codes.xhtml) - 311 zipcode shape records (in `.shp` format)
+* [Los Angeles Postal Codes](https://data.lacounty.gov/Geospatial/ZIP-Codes/65v5-jw9f) - 311 zipcode shape records (in `.shp` format)
 
 
 ## Data dictionary
