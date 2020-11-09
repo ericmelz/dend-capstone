@@ -92,6 +92,8 @@ LIMIT 5;
  25620(A)BP |   3442 | posession of an open alcohol container in public
 ```
 
+<img style="float: right;" src="90028.jpg">
+
 
 ### Top penal codes in Sherman Oaks (zipcode = 91403), a typical suburb
 ```
@@ -114,7 +116,7 @@ LIMIT 5;
 ```
 
 
-### Most popular hour of day to commit crime
+### Most popular hours of the day to commit crimes
 ```
 SELECT HourOfDay, count(*) crimes
 FROM crime_fact
