@@ -2,7 +2,9 @@
 
 set -ex
 
-. variables.sh
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+. $script_dir/variables.sh
 
 echo "Downloading Los Angeles arrest data..."
 

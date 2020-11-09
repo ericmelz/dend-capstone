@@ -46,6 +46,7 @@ def main(db):
     check_sexcodes(conn)
     print('Quality checks passed!')
 
+
 if __name__ == '__main__':
     if len(sys.argv) == 2 and (sys.argv[1] != 'postgres' and sys.argv[1] != 'unittest'):
         print('Usage: python3 quality_checks [<dbname>].  dbname is one of {postgres,unittest}')
