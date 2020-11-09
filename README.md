@@ -3,10 +3,47 @@ Udacity Data Engineering Nano Degree capstone project
 
 ## Goal
 The goal of this project is to provide a star schema for analyzing Los Angeles crime reports.
+
+## Data sources
 The analytics data is derived from two data sources:
 * [Los Angeles crime reports](https://data.lacity.org/A-Safe-City/Arrest-Data-from-2010-to-2019/yru6-6re4) - 1.3M rows
-* [Los Angeles Postal Codes](https://data.lacounty.gov/Geospatial/ZIP-Codes/65v5-jw9f) - 311 zipcode shape records (in `.shp` format)
+* [Los Angeles Postal Codes](https://data.lacounty.gov/Geospatial/ZIP-Codes/65v5-jw9f) - 311 zipcode shape records in [shapefile](https://en.wikipedia.org/wiki/Shapefile) format
 
+## Executing the pipeline
+The pipeline downloads the data, loads it into postgres, and
+transforms it into fact and dimension tables.  To execute the
+pipeline, simply run the [run-pipeline.sh]() script:
+```
+scripts/run_pipeline.sh
+https://github.com/ericmelz/dend-capstone/blob/main/scripts/run_pipeline.sh
+```
+Details of the pipeline's ETL are described in a later section.
+
+
+## Executing the quality checks
+The quality checks are run at the end of the pipeline.
+The quality check code is in the [quality_checks.py](https://github.com/ericmelz/dend-capstone/blob/main/python/quality_checks.py) file, and can be executed as follows:
+```
+cd python
+pip3 install -r requirements.txt
+python3 quality_checks.py
+```
+The quality checks performs 3 checks:
+* Check that the crime fact table has rows
+* Check that the time dimension table has rows
+* Check that all arrestee sex codes are either 'M' or 'F'
+
+## Executing the unit tests
+Unit test use a separate database along with prepackaged .csv and
+shape files.  The unit test first load a .csv file with 9 rows of
+data, then another csv file with the original 9 rows plus an
+additional 10 rows.  The script checks that each run of the pipeline
+generates the expected number of rows in the fact table (first 9, then
+19).  To run the unit test execute
+[scripts/run_unittest_pipeline.sh](https://github.com/ericmelz/dend-capstone/blob/main/scripts/run_unittest_pipeline.sh):
+```
+scripts/run_unittest.sh
+```
 
 ## Data dictionary
 ### crime_fact - Fact table of arrest reports
@@ -147,8 +184,7 @@ machine, and they can handle the data size for this project.
 The database and pipeline was set up on an AWS EC2 m5.2xlarge
 instance with 1TB of storage. 
 
-The pipeline is written using a combination of Bash and SQL.
-This avoids dependencies on other languages and frameworks.
+The pipeline is written using a combination of Bash SQL, and Python. 
 
 ## Pipeline
 
@@ -167,8 +203,7 @@ Additionally, the PostGIS extension is registered with PostgresQL.
 ### Periodic data updates
 To run the pipeline, execute from the project directory
 ```
-cd scripts
-./run_pipeline.sh
+scripts/run_pipeline.sh
 ```
 This script does the following.
 
@@ -213,17 +248,6 @@ shapes (a `.zip` file containing a `.shp` file).
    on timestamps available in `crime_staging_typed`.
 
 
-### Testing
-To test the pipeline, execute from the project directory
-```
-cd scripts
-./run_unittest_pipeline.sh
-```
-
-This runs the same scripts as the production pipeline, but instead of
-downloading data, test data is used.  Also instead of the production
-database, the `unittest` database is used.
-
 ## Quality assurance
 Several quality constraints are built in to the pipeline.  These
 include:
@@ -232,6 +256,7 @@ include:
 * Dropping of duplicates during computation of the fact table
 * Changing the bad `2400` time to `0000`, representing midnight
 * Dropping of rows that contain `NULL` values.
+
 
 ## Scheduling
 The pipeline should be run weekly.  This is because the source arrest
@@ -253,16 +278,21 @@ The pipeline could be further productionalized by leveraging airflow,
 enabling monitoring and backfilling functionality.
 
 ### Daily schedule
-If the pipeline were to run at 7a.m., there is little to change about
-the pipeline.  This is because the pipeline is design to detect new
-records, and will process only the new records when they become
-available.  If there are no new records in the source data, there will
-be nothing added to the fact or dimension tables.  Currently, the
-pipeline takes about 15 minutes to run, so there would be a minor cost
-incurred for running it daily.
+If the pipeline were to run at 7a.m., a cron job could be scheduled to
+run the `run_pipeline.sh` script daily at 7a.m.  Otherwise, there is
+little to change about the pipeline.  This is because the pipeline is
+design to detect new records, and will process only the new records
+when they become available.  If there are no new records in the source
+data, there will be nothing added to the fact or dimension tables.
+Currently, the pipeline takes about 15 minutes to run, so there would
+be a minor cost incurred for running it daily.
 
 ### Data access
 If the data needed to be accessed by 100+ people, the current
 PostgreSQL database should be able to handle it.  However, for the
 most robust system, a distributed datawarehouse such as Redshift or
 Snowflake should be used in place of PostgreSQL.
+
+Additionally, a log of user activity should be maintained, and the
+load on the cluster should be monitored.  If additional resources are
+needed, additional cluster nodes should be allocated.
