@@ -32,45 +32,64 @@ LIMIT 5;
 
 
 ### Top penal codes in Los Angeles (all zipcodes)
-Note the following Penal code descriptions:
-| Code | Description |
-| --- | --- |
-| 23152 | DUI |
 
 
 ```
+SELECT charge, count(*) counts, description
+FROM crime_fact
+JOIN penal_codes
+ON crime_fact.charge = penal_codes.code
+GROUP BY charge, description
+ORDER BY counts DESC
+LIMIT 5;
+
+   charge   | counts |                        description                         
+------------+--------+------------------------------------------------------------
+ 23152(A)VC |  98726 | driving under the influence of alchohol
+ 41.27CLAMC |  93842 | drinking alcohol in public
+ 273.5(A)PC |  46646 | domestic abuse
+ 11377(A)HS |  40931 | posession of methamphetamine
+ 11350(A)HS |  34221 | posession of a controlled substance without a prescription
+```
+
+
+### Top penal codes in Hollywood, (zipcode = 90028), the highest crime zipcode
+```
 SELECT charge, count(*) counts
 FROM crime_fact
+WHERE zipcode = '90028'
 GROUP BY charge
 ORDER BY counts DESC
 LIMIT 5;
 
-   charge   | counts
-------------+--------
- 23152(A)VC |  98726
- 41.27CLAMC |  93842
- 273.5(A)PC |  46646
- 11377(A)HS |  40931
- 11350(A)HS |  34221
+   charge   | counts |                    description                     
+------------+--------+----------------------------------------------------
+ 41.27CLAMC |   9386 | drinking alcohol in public
+ 23152(A)VC |   4446 | driving under the influence of alchohol
+ 41.18DLAMC |   3954 | sitting or lying, or sleeping on a public sidewalk
+ 853.7PC    |   3646 | violation of a promise to appear in court
+ 25620(A)BP |   3442 | posession of an open alcohol container in public
 ```
 
 
-### Top penal codes in Sherman Oaks (zipcode = 91403)
+### Top penal codes in Sherman Oaks (zipcode = 91403), a typical suburb
 ```
-SELECT charge, count(*) counts
+SELECT charge, count(*) counts, description
 FROM crime_fact
+JOIN penal_codes
+ON crime_fact.charge = penal_codes.code
 WHERE zipcode = '91403'
-GROUP BY charge
+GROUP BY charge, description
 ORDER BY counts DESC
 LIMIT 5;
 
-   charge   | counts
-------------+--------
- 23152(A)VC |   2144
- 25620BP    |    195
- 273.5(A)PC |    153
- 11377(A)HS |    147
- 11350(A)HS |    135
+   charge   | counts |                        description                         
+------------+--------+------------------------------------------------------------
+ 23152(A)VC |   2144 | driving under the influence of alchohol
+ 25620BP    |    195 | posession of an open alcohol container in public
+ 273.5(A)PC |    153 | domestic abuse
+ 11377(A)HS |    147 | posession of methamphetamine
+ 11350(A)HS |    135 | posession of a controlled substance without a prescription
 ```
 
 
