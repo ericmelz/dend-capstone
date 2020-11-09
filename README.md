@@ -188,7 +188,7 @@ The pipeline is written using a combination of Bash, SQL, and Python.
 ## Pipeline
 
 ### Initial setup
-After PostgreSQL and PostGIS installed, the database needs to be
+After PostgreSQL and PostGIS are installed, the database needs to be
 initialized.  From the project directory, execute
 ```
 cd scripts
@@ -197,7 +197,7 @@ cd scripts
 ```
 These steps create the unittest database, which contain the same
 tables as the production tables, used for a testing environment.
-Additionally, the PostGIS extension is registered with PostgresQL. 
+Additionally, the PostGIS extension is registered with PostgreSQL. 
 
 ### Periodic data updates
 To run the pipeline, execute from the project directory
@@ -207,7 +207,7 @@ scripts/run_pipeline.sh
 This script does the following.
 
 * *Download data* - Uses `curl` to download the arrest data (a `.csv` file) and the zipcode
-shapes (a `.zip` file containing a `.shp` file).
+shapes (a `.zip` file containing shape files).
 
 * *Convert shapes* - runs `shp2pgsql` to convert the shape data into
    valid SQL, and loads the SQL into the `zip_codes` table.  Then a
