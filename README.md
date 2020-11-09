@@ -33,8 +33,8 @@ The quality checks performs 3 checks:
 * Check that all arrestee sex codes are either 'M' or 'F'
 
 ## Executing the unit tests
-Unit test use a separate database along with prepackaged .csv and
-shape files.  The unit test first load a .csv file with 9 rows of
+The Unit tests use a separate database along with prepackaged .csv and
+shape files.  The unit tests first load a .csv file with 9 rows of
 data, then another csv file with the original 9 rows plus an
 additional 10 rows.  The script checks that each run of the pipeline
 generates the expected number of rows in the fact table (first 9, then
@@ -183,7 +183,7 @@ machine, and they can handle the data size for this project.
 The database and pipeline was set up on an AWS EC2 m5.2xlarge
 instance with 1TB of storage. 
 
-The pipeline is written using a combination of Bash SQL, and Python. 
+The pipeline is written using a combination of Bash, SQL, and Python.
 
 ## Pipeline
 
