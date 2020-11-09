@@ -12,10 +12,9 @@ The analytics data is derived from two data sources:
 ## Executing the pipeline
 The pipeline downloads the data, loads it into postgres, and
 transforms it into fact and dimension tables.  To execute the
-pipeline, simply run the [run-pipeline.sh]() script:
+pipeline, simply run the [run-pipeline.sh](https://github.com/ericmelz/dend-capstone/blob/main/scripts/run_pipeline.sh) script:
 ```
 scripts/run_pipeline.sh
-https://github.com/ericmelz/dend-capstone/blob/main/scripts/run_pipeline.sh
 ```
 Details of the pipeline's ETL are described in a later section.
 
