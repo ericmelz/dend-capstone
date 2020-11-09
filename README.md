@@ -19,7 +19,7 @@ The analytics data is derived from two data sources:
 | Charge | varchar | | Penal code associated with the arrest |
 | ZipCode | varchar | | Zip code of the arrest |
 
-###datetime_dimension - Dimension table for date and time
+### datetime_dimension - Dimension table for date and time
 | Column name | Type | Constraint | Description |
 | --- | --- | --- | --- |
 | ReportId | varchar | Primary Key | Id of the arrest report |
