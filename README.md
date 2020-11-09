@@ -7,10 +7,18 @@ The analytics data is derived from two data sources:
 * [Los Angeles crime reports](https://data.lacity.org/A-Safe-City/Arrest-Data-from-2010-to-2019/yru6-6re4) - 1.3M rows
 * [Los Angeles Postal Codes](https://leginfo.legislature.ca.gov/faces/codes.xhtml) - 311 zipcode shape records (in `.shp` format)
 
-## Schema
-
 
 ## Data dictionary
+### crime_fact
+| Column name | Type | Constraint | Description |
+| --- | --- | --- | --- |
+| ReportId | varchar | Primary Key | Id of the arrest report |
+| Age | varchar | | Age of the offender |
+| SexCode | varchar | | Gender of the offender M = Male, F = Female |
+| Descent Code | varchar | | Ethnicity of the offender W = White, H = Hispanic, B = Black |
+| Charge | varchar | | Penal code associated with the arrest |
+| ZipCode | varchar | | Zip code of the arrest |
+
 
 ## Example queries
 ### Top zipcodes for crime
