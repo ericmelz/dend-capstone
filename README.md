@@ -136,4 +136,133 @@ LIMIT 5;
         20 |  76563
 ```
 
+## Tools and technologies
+The backend database used is
+[PostgreSQL](https://www.postgresql.org/), with the
+[PostGIS](https://postgis.net/) extension for spatial queries.
+
+These technologies were chosen because they are easy to set up on any
+machine, and they can handle the data size for this project.
+
+The database and pipeline was set up on an AWS EC2 m5.2xlarge
+instance with 1TB of storage. 
+
+The pipeline is written using a combination of Bash and SQL.
+This avoids dependencies on other languages and frameworks.
+
 ## Pipeline
+
+### Initial setup
+After PostgreSQL and PostGIS installed, the database needs to be
+initialized.  From the project directory, execute
+```
+cd scripts
+./initialize_database.sh
+./initialize_unittest_database.sh
+```
+These steps create the unittest database, which contain the same
+tables as the production tables, used for a testing environment.
+Additionally, the PostGIS extension is registered with PostgresQL. 
+
+### Periodic data updates
+To run the pipeline, execute from the project directory
+```
+cd scripts
+./run_pipeline.sh
+```
+This script does the following.
+
+* *Download data* - Uses `curl` to download the arrest data (a `.csv` file) and the zipcode
+shapes (a `.zip` file containing a `.shp` file).
+
+* *Convert shapes* - runs `shp2pgsql` to convert the shape data into
+   valid SQL, and loads the SQL into the `zip_codes` table.  Then a
+   saptial index is created on the zip_codes table.
+
+* *Setup fact and dimension tables* - If the fact and dimension tables
+   don't already exist, create them
+
+* *Load raw arrest data* - Use the PostgreSQL `COPY` command to load
+   the raw csv into the `crime_staging_untyped` table,  mirroring the
+   csv structure.  All colummns in `crime_staging_untyped`
+   are varchars.
+
+* *Clearn the raw data* - Change rows containing `time=2400` to
+   `time=0000`, and remove rows containing `NULL`s
+
+* *Compute new records* - Calculate the records that are not already
+   in the fact table.  Store the ids of the new records.
+
+* *Strongly type staging data* - Cast columns of
+   `crime_staging_untyped` to their appropriate types.  Store result
+   in `crime_staging_typed`.  Also, create a spatial column for the
+   location of the arrest report, and index the spatial column.
+
+* *Join zipcodes* - Geographically join `crime_staging_typed` with
+   `zip_codes` to decorate arrest reports with zipcodes.  Save the
+   result in `crime_staging_typed_with_zips`
+
+* *Drop duplicates* - Since their can be multiple zipcodes that
+   intersect a given point, drop all but the lowest-numbered zipcode
+   for each arrest report.
+
+* *Load fact table* - Load the processed records from
+   `crime_staging_typed_with_zips` to the `crime_fact` table.
+
+* *Load dimension table* - Create the `datetime_dimension` table based
+   on timestamps available in `crime_staging_typed`.
+
+
+### Testing
+To test the pipeline, execute from the project directory
+```
+cd scripts
+./run_unittest_pipeline.sh
+```
+
+This runs the same scripts as the production pipeline, but instead of
+downloading data, test data is used.  Also instead of the production
+database, the `unittest` database is used.
+
+## Quality assurance
+Several quality constraints are built in to the pipeline.  These
+include:
+* Primary key constraints on the fact and dimension tables
+* Non-nullable constraints on the staging table
+* Dropping of duplicates during computation of the fact table
+* Changing the bad `2400` time to `0000`, representing midnight
+* Dropping of rows that contain `NULL` values.
+
+## Scheduling
+The pipeline should be run weekly.  This is because the source arrest
+data is updated weekly.
+
+## Scaling
+### Data Increase
+If the data were to increase by 100x, it would no longer be feasible
+to use the identical pipeline and database.  This is because the
+pipeline takes about 15 minutes to run currently, and a 100x increase
+in size necessitates more approximately 100x time to process, in this
+case over one day.  To mitigate the increased demand, the data can be
+partitioned into time-based chunks such as daily or hourly.  This
+would allow a spark-based pipeline to process each partition in
+parallel.  Also a datawarehouse such as redshift can leverage
+distributed nodes to speed up processing.
+
+The pipeline could be further productionalized by leveraging airflow,
+enabling monitoring and backfilling functionality.
+
+### Daily schedule
+If the pipeline were to run at 7a.m., there is little to change about
+the pipeline.  This is because the pipeline is design to detect new
+records, and will process only the new records when they become
+available.  If there are no new records in the source data, there will
+be nothing added to the fact or dimension tables.  Currently, the
+pipeline takes about 15 minutes to run, so there would be a minor cost
+incurred for running it daily.
+
+### Data access
+If the data needed to be accessed by 100+ people, the current
+PostgreSQL database should be able to handle it.  However, for the
+most robust system, a distributed datawarehouse such as Redshift or
+Snowflake should be used in place of PostgreSQL.
