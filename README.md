@@ -217,7 +217,7 @@ The pipeline is written using a combination of Bash, SQL, and Python.
 After PostgreSQL and PostGIS are installed, the database needs to be
 initialized.  From the project directory, execute
 ```
-cd scripts
+cd scripts/db_setup
 ./initialize_database.sh
 ./initialize_unittest_database.sh
 ```
