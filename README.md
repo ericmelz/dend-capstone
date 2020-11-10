@@ -228,7 +228,7 @@ Additionally, the PostGIS extension is registered with PostgreSQL.
 ### Periodic data updates
 To run the pipeline, execute from the project directory
 ```
-scripts/run_pipeline.sh
+scripts/pipeline/run_pipeline.sh
 ```
 This script does the following.
 
@@ -274,13 +274,14 @@ shapes (a `.zip` file containing shape files).
 
 
 ## Quality assurance
-Several quality constraints are built in to the pipeline.  These
-include:
+In addition to the quality checks at the end of the pipeline, several
+quality constraints are built in to the pipeline itself.  These include:
 * Primary key constraints on the fact and dimension tables
+* Strong typing on the staging table
+* Dropping of rows that contain `NULL` values.
 * Non-nullable constraints on the staging table
 * Dropping of duplicates during computation of the fact table
 * Changing the bad `2400` time to `0000`, representing midnight
-* Dropping of rows that contain `NULL` values.
 
 
 ## Scheduling
