@@ -12,18 +12,18 @@ The analytics data is derived from two data sources:
 ## Executing the pipeline
 The pipeline downloads the data, loads it into postgres, and
 transforms it into fact and dimension tables.  To execute the
-pipeline, simply run the [run-pipeline.sh](https://github.com/ericmelz/dend-capstone/blob/main/scripts/run_pipeline.sh) script:
+pipeline, simply run the [run-pipeline.sh](https://github.com/ericmelz/dend-capstone/blob/main/scripts/pipeline/run_pipeline.sh) script:
 ```
-scripts/run_pipeline.sh
+scripts/pipeline/run_pipeline.sh
 ```
 Details of the pipeline's ETL are described in a later section.
 
 
 ## Executing the quality checks
 The quality checks are run at the end of the pipeline.
-The quality check code is in the [quality_checks.py](https://github.com/ericmelz/dend-capstone/blob/main/python/quality_checks.py) file, and can be executed as follows:
+The quality check code is in the [quality_checks.py](https://github.com/ericmelz/dend-capstone/blob/main/python/quality_checks/quality_checks.py) file, and can be executed as follows:
 ```
-cd python
+cd scripts/quality_checks
 pip3 install -r requirements.txt
 python3 quality_checks.py
 ```
@@ -39,10 +39,25 @@ data, then another csv file with the original 9 rows plus an
 additional 10 rows.  The script checks that each run of the pipeline
 generates the expected number of rows in the fact table (first 9, then
 19).  To run the unit test execute
-[scripts/run_unittest_pipeline.sh](https://github.com/ericmelz/dend-capstone/blob/main/scripts/run_unittest_pipeline.sh):
+[scripts/unittest/run_unittest_pipeline.sh](https://github.com/ericmelz/dend-capstone/blob/main/scripts/unittest/run_unittest_pipeline.sh):
 ```
-scripts/run_unittest.sh
+scripts/unittest/run_unittest.sh
 ```
+
+## Data Model
+The data model chosen was a star schema, using a relational database.
+This data model is the most appropriate for the analytics use case.
+For example, we can ask queries such, as
+
+* What time of day are crimes most likely to occur?
+* What zipcodes have the most crime?
+* For a given zipcode, what are the most prevalent crimes?
+* Have crimes trended up or down over time?
+* What crimes are associated with each ethnicity?
+
+The Data Model is shown below
+
+<img style="float: right;" src="images/data_model.png">
 
 ## Data dictionary
 ### crime_fact - Fact table of arrest reports
