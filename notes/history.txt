@@ -1,0 +1,316 @@
+    1  sudo apt update
+    2  sudo apt upgrade
+    3  sudo -i -u postgres
+    4  sudo apt install postgres
+    5  sudo apt install postgresql-contrib
+    6  sudo apt install postgis
+    7  sudo -i -u postgres
+    8  ls
+    9  mkdir shp
+   10  mv LA_County_Parcels-shp.zip 
+   11  mv LA_County_Parcels-shp.zip shp
+   12  cd shp
+   13  ls -l
+   14  unzip *
+   15  sudo apt install unzip
+   16  unzip *
+   17  ls -l
+   18  sudo -u postgres shp2pgsql 
+   19  sudo -u postgres shp2pgsql x
+   20  ls -l
+   21  sudo -u postgres shp2pgsql LA_County_Parcels.shp
+   22  sudo -i -u postgres
+   23  pwd
+   24  sudo -u postgres shp2pgsql LA_County_Parcels.shp > parcels.sql
+   25  sudo -u postgres -f parcels.sql
+   26  sudo -u psql -f parcels.sql
+   27  sudo -u postgres psql -f parcels.sql
+   28  sudo -u postgres -c -D -i -I *.shp > parcel2.sql
+   29  sudo -u postgres shp2pgsql -c -D -i -I *.shp > parcel2.sql
+   30  cat parcel2.sql
+   31  sudo -u postgres psql -f parcel2.sql
+   32  sudo -i -u postgres
+   33  tmux
+   34  emacs
+   35  sudo apt install emacs25-nox
+   36  ls -l
+   37  mkdir notes
+   38  pwd
+   39  chmod 777 notes
+   40  sudo -i -u postgres
+   41  mkdir unittest_data
+   42  chmod 777 unittest_data/
+   43  ls -l data
+   44  mv arrest_head.csv unitt_test_data
+   45  mv arrest_head20.csv unittest_data/
+   46  mv unitt_test_data unittest_data/arrests_head10.csv
+   47  mv unittest_data/arrest_head20.csv arrests_head20.csv
+   48  cp data/arrests.csv unittest_data/
+   49  ls -l unittest_data/
+   50  mv arrests_head20.csv unittest_data/
+   51  ls -l unittest_data/
+   52  ls -lh unittest_data/
+   53  cd unittest_data/
+   54  mkdir splits
+   55  mv arrests.csv splits/
+   56  cd splits/
+   57  man split
+   58  cd ..
+   59  mv split split1000
+   60  mv splits split1000
+   61  cd split1000/
+   62  ls -l
+   63  split arrests.csv -l1000
+   64  ls -l
+   65  ls -l|wc -l
+   66  ls -l|head
+   67  cat xaa | wc -l
+   68  mv xaa ../arrests_head1000.csv
+   69  cd ..
+   70  mv split1000/arrests.csv .
+   71  head arrests.csv -n10000>arrests_head10k.csv
+   72  cat arrests_head10k.csv |wc -l
+   73  head arrests.csv -n100000>arrests_head100k.csv
+   74  ls -l
+   75  cd ..
+   76  mkdir unittest_shapes
+   77  cp shapes/*shp unittest_shapes/
+   78  ls -l unittest_shapes/
+   79  chmod 777 unittest_shapes/
+   80  cd dend-capstone/
+   81  git status
+   82  git add .gitignore
+   83  git add scripts
+   84  git commit -m"initial commit"
+   85  git push
+   86  git status
+   87  git add README.md 
+   88  git add scripts/test_queries.sql 
+   89  git status
+   90  git commit -m"work"
+   91  git push
+   92  git add README.md 
+   93  git commit -m"work"
+   94  git push
+   95  git config --global --edit
+   96  export EDITOR=emacs
+   97  git config --global --edit
+   98  git status
+   99  git add *
+  100  git commit -m"updates"
+  101  git push
+  102  git add *
+  103  git commit -m"updates"
+  104  git push
+  105  git add *
+  106  git commit -m"updates"
+  107  git push
+  108  git status
+  109  git add *
+  110  git status
+  111  git commit -m"work"
+  112  git push
+  113  git add *
+  114  git commit -m"work"
+  115  git push
+  116  git add *
+  117  git commit -m"work"
+  118  git push
+  119  git add *
+  120  git commit -m"work"
+  121  git push
+  122  git add *
+  123  git commit -m"work"
+  124  git push
+  125  git add *
+  126  git commit -m"work"
+  127  git push
+  128  git pull
+  129  git commit -m"work"
+  130  git add *
+  131  git commit -m"work"
+  132  git push
+  133  git pull
+  134  ls images
+  135  git status
+  136  git add *
+  137  git commit -m"work"
+  138  git push
+  139  git add *
+  140  git commit -m"work"
+  141  git push
+  142  git status
+  143  git add *
+  144  git status
+  145  git commit -m"work"
+  146  git push
+  147  emacs ~/.ssh/config 
+  148  eval "$(ssh-agent -s)"
+  149  ssh-add ~/.ssh/id_rsa
+  150  ls -l ~/.ssh
+  151  ssh-add ~/.ssh/id_rsa_ericmelz
+  152  pwd
+  153  git clone git@github.com:ericmelz/dend-capstone.git
+  154  ls -l
+  155  cd dend-capstone
+  156  ls -0l
+  157  ls -l
+  158  emacs .gitignore
+  159  cd notes/
+  160  ls
+  161  emacs create.sql
+  162  sudo -u postgres
+  163  history|grep sudo|tail
+  164  sudo -i -u postgres
+  165  mkdir ~/shapes
+  166  mkdir ~/data
+  167  chmod 777 shapes
+  168  chmod 777 ~/shapes
+  169  chmod 777 ~/data
+  170  sudo -i -u postgres
+  171  cd dend-capstone/
+  172  cd python/
+  173  python3 -mvenv .env
+  174  sudo apt-get install python3-venv
+  175  python3 -mvenv .env
+  176  pip upgrade
+  177  sudo apt install python3-pip
+  178  ls -la
+  179  . .env/bin/activate
+  180  pip install --r requirements.tx
+  181  pip install -r requirements.tx
+  182  pip install -r requirements.txt
+  183  ls -l
+  184  python3 quality_checks.py 
+  185  sudo -i -u postgres
+  186  sudo apt-get install postgress-server-dev
+  187  sudo apt-get install postgresql-server-dev
+  188  postgres -v
+  189  psql -v
+  190  sudo apt-get install postgresql-server-dev-10.0
+  191  sudo apt-get install python-psycopg2
+  192  sudo apt-get install libpq-dev
+  193  sudo -i -u postgres
+  194  pip3 install -r requirements.txt
+  195  sudo -i -u postgres
+  196  cd ..
+  197  git add .gitignore
+  198  git add python
+  199  git status
+  200  git commit -m"added quality checks"
+  201  git push
+  202  sudo -i -u python3
+  203  sudo -i -u postgres
+  204  git status
+  205  git add *
+  206  git commit -m"added quality_check wrapper scripts"
+  207  git push
+  208  sudo -i -u postgres
+  209  git status
+  210  git add *
+  211  git commit -m"work on script locations"
+  212  git push
+  213  git status
+  214  git add .gitignore
+  215  git commit -m"ignore data dir contents"
+  216  git push
+  217  sudo -i -u postgres
+  218  git status
+  219  git add *
+  220  git commit -m"refactor script locations, unittest pipeline"
+  221  git push
+  222  git status
+  223  git add README.md 
+  224  git commit -m"work"
+  225  git push
+  226  git add *
+  227  git commit -m"fixed README"
+  228  git push
+  229  git add *
+  230  git commit -m"fixed README"
+  231  git push
+  232  git add *
+  233  git commit -m"fixed README"
+  234  git push
+  235  git add *
+  236  git commit -m"fixed README"
+  237  git push
+  238  pwd
+  239  ls -l
+  240  cd dend-capstone
+  241  mkdir python
+  242  cd python
+  243  emacs requirements.txt
+  244  cd dend-capstone/
+  245  git status
+  246  ls -l
+  247  cd scripts
+  248  ls -l
+  249  git rm setup_instance.sh 
+  250  rm *~
+  251  ls -l
+  252  git status
+  253  git add exploration/
+  254  git add pipeline
+  255  git add quality_checks/
+  256  git add unittest
+  257  git status
+  258  git add *
+  259  git status
+  260  git rm ../python/check_fact_rows.py
+  261  git status
+  262  git rm ../python/quality_checks.py
+  263  git rm ../python/requirements.txt
+  264  git rm ../python/run_production_quality_checks.sh
+  265  git rm ../python/run_unittest_quality_checks.sh
+  266  git status
+  267  git rm create_unittest_db.sh
+  268  git rm create_unittest_db.sql
+  269  git rm create_zipcode_index.sql
+  270  git rm download_arrests.sh
+  271  git rm download_zipcode_shapes.sh
+  272  git rm init_zipcodes.sql
+  273  git rm initialize_database.sh
+  274  git rm initialize_database.sql
+  275  git rm initialize_unnittest_database.sh
+  276  git rm load_zipcode_shapes.sh
+  277  git rm penal_codes.sql
+  278  git rm pipeline.sql
+  279  git rm run_unittest_pipeline.sh
+  280  git rm setup_unittest.sh
+  281  git rm setup_unittest.sql
+  282  git rm test_queries.sql
+  283  git status
+  284  git rm run_pipeline.sh
+  285  git status
+  286  git commit -m"move scripts to better structure"
+  287  git push
+  288  ps -f -u postgres
+  289  sudo lsof -n -u postgres |grep LISTEN
+  290  sudo emacs /etc/postgresql/10/main/postgresql.conf 
+  291  sudo service postgresql restart
+  292  sudo -i -u postgres
+  293  git status
+  294  cd ..
+  295  git status
+  296  git pull
+  297  git status
+  298  git add *
+  299  git commit -m"updated README"
+  300  git push
+  301  git status
+  302  git pull
+  303  git status
+  304  git add *
+  305  git comiit -m"updated README"
+  306  git push
+  307  git status
+  308  git add *
+  309  git commit -m"fixed paths in scripts"
+  310  git push
+  311  emacs
+  312  cd dend-capstone/
+  313  mkdir notes
+  314  cd notes
+  315  history
+  316  history > history.txt
