@@ -9,6 +9,17 @@ The analytics data is derived from two data sources:
 * [Los Angeles crime reports](https://data.lacity.org/A-Safe-City/Arrest-Data-from-2010-to-2019/yru6-6re4) - 1.3M rows
 * [Los Angeles Postal Codes](https://data.lacounty.gov/Geospatial/ZIP-Codes/65v5-jw9f) - 311 zipcode shape records in [shapefile](https://en.wikipedia.org/wiki/Shapefile) format
 
+## Exploring the data
+
+A preview of the data is shown below.
+<img style="float: right;" src="images/table_preview.png">
+
+A perusal of the data shows that there is arrest data with a variety
+of interesting attributes, such as time, age, gender, enthnicity, and
+charge codes.  What's missing from the data is additional geographic
+information such as city and zip code.  This lack of information
+motivated the addition of zip code data, derived from a separate source.
+
 ## Executing the pipeline
 The pipeline downloads the data, loads it into postgres, and
 transforms it into fact and dimension tables.  To execute the
